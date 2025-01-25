@@ -1,0 +1,13 @@
+
+<div>
+  <div>
+    UserName: {{ data.user.username }}
+  </div>
+  <div style="flex-direction: row;">
+    <div>
+      <input type="checkbox" name="rad2" [checked]="data.user.status" (click)="data.user.status = true"> true
+      <input type="checkbox" name="rad3" [checked]="!data.user.status" (click)="data.user.status = false"> false
+    </div>
+    <button mat-button (click)="onCancel()" cdkFocusInitial>Ok</button>
+  </div>
+</div>

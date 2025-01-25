@@ -1,0 +1,16 @@
+<div>
+  <table>
+      <thead>
+          <tr>
+            <th>UserName</th>
+            <th>Active</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of user">
+            <th (click)="onClick(item)">{{ item.username }}</th>
+            <td>{{ item.status === true ? 'Yes' : 'No' }}</td>
+        </tr>
+      </tbody>
+  </table>
+</div>
