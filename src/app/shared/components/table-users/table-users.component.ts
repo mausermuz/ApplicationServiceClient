@@ -35,7 +35,6 @@ export class TableUsersComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe(result => { 
        if (result) {
-        debugger
         //this.user.next(this.users)
         this.onListChange.emit(this.users)
        }

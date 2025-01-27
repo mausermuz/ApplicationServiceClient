@@ -7,12 +7,10 @@
           </tr>
       </thead>
       <tbody>
-        @for (item of user; track item) {
-          <tr>
+        <tr *ngFor="let item of user">
             <th (click)="onClick(item)">{{ item.username }}</th>
             <td>{{ item.status === true ? 'Yes' : 'No' }}</td>
-          </tr>
-        }
+        </tr>
       </tbody>
   </table>
 </div>
