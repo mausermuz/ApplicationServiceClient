@@ -24,14 +24,14 @@ export class UsersComponent implements OnInit {
   private previewUsers = new BehaviorSubject<User[]>([])
   private previewUsers$ = this.previewUsers.asObservable()
 
-  public emitCurrentList($event: any): void {
+  public emitCurrentList($event: any) {
     console.log($event)
     this.previewUsers$.subscribe(el => {
       console.log(el)
     })
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.userService.getUsers().subscribe(data => {
       this.previewUsers.next(data)
       this.data$.next(data)

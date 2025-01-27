@@ -10,16 +10,16 @@ export const routes: Routes = [
     },
     {  
         path: ApiRoutes.LOGIN, 
-        loadComponent: () => import('./core/auth/pages/login/login.component').then(x => x.LoginComponent) 
+        loadChildren: () => import('./core/auth/auth.routes').then((c) => c.ROUTES_AUTH) 
     },
-    {
+    {  
         path: ApiRoutes.WELCOME,
         canActivate: [AuthGuard],
-        loadComponent: () => import('./features/welcome/components/welcome/welcome.component').then((c) => c.WelcomeComponent) 
+        loadChildren: () => import('./features/welcome/welcome.routes').then((c) => c.ROUTES_WELCOME) 
     },
     {  
         path: ApiRoutes.USERS,
-        loadComponent: () => import('./features/users/components/users/users.component').then((c) => c.UsersComponent) 
+        loadChildren: () => import('./features/users/users.routes').then((c) => c.ROUTES_USERS) 
     },
 ]
 
