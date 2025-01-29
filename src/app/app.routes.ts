@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router'
 import { ApiRoutes } from './shared/enums/routes'
 import { AuthGuard } from './core/auth/guards/auth.guard'
+import { inject } from '@angular/core'
+import { StorageService } from './core/auth/pages/login/services/storage.service'
 
 export const routes: Routes = [
     { 
@@ -9,7 +11,8 @@ export const routes: Routes = [
         pathMatch: 'full' 
     },
     {  
-        path: ApiRoutes.LOGIN, 
+        path: ApiRoutes.LOGIN,
+        canActivate: [()=> !inject(StorageService).isLoggedIn()],
         loadComponent: () => import('./core/auth/pages/login/login.component').then(x => x.LoginComponent)  
     },
     {  

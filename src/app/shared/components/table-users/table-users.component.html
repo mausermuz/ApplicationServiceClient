@@ -7,7 +7,7 @@
           </tr>
       </thead>
       <tbody>
-        @for (item of user; track item) {
+        @for (item of users; track item) {
           <tr>
             <th (click)="onClick(item)">{{ item.username }}</th>
             <td>{{ item.status === true ? 'Yes' : 'No' }}</td>

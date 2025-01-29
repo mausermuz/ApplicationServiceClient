@@ -1,8 +1,16 @@
 
-<ng-container *ngIf="(data$ | async) as data">
-    <app-table-users [user]="data" (onListChange)="emitCurrentList($event)"></app-table-users>
+<ng-container *ngIf="changedUsers.length && !isClick">
+    <div>One or more users have been modified.</div>
+    <button (click)="onSave()">Save</button>
 </ng-container>
 
-<div>
+<app-table-users [users]="users" (onListChange)="emitCurrentList($event)"></app-table-users>
 
+<div style="display: flex; flex-direction: row; margin-top: 15px;">
+  @for (pUser of changedUsers; track pUser) {
+    <div style="margin-left: 10px;">
+      <div>{{ pUser.username }}</div>
+      <div>{{ pUser.status }}</div>
+    </div>
+  }
 </div>

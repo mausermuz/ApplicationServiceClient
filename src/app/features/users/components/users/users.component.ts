@@ -10,31 +10,42 @@ import { User } from '../../models/user';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TableUsersComponent,
     CommonModule
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersComponent implements OnInit {
   private readonly userService = inject(UserService)
 
-  public data$ = new BehaviorSubject<User[]>([])
+  public users: User[] = []
+  public previewUsers: User[] = []
+  public changedUsers: User[] = []
 
-  private previewUsers = new BehaviorSubject<User[]>([])
-  private previewUsers$ = this.previewUsers.asObservable()
+  public isClick: boolean = false
 
-  public emitCurrentList($event: any): void {
-    console.log($event)
-    this.previewUsers$.subscribe(el => {
-      console.log(el)
+  public emitCurrentList($event: User): void {
+    this.changedUsers = []
+    this.previewUsers.forEach(user => {
+      const actualUser = this.users.find(u => u.id === user.id)
+      if (actualUser && actualUser?.status != user.status) {
+        this.changedUsers.push(actualUser)
+      }
     })
   }
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe(data => {
-      this.previewUsers.next(data)
-      this.data$.next(data)
+      this.users = JSON.parse(JSON.stringify(data))
+      this.previewUsers = JSON.parse(JSON.stringify(data))
     })
+  }
+
+  public onSave(): void {
+    this.userService.updateStatusUsers(this.users).subscribe(data => {
+
+    })
+    this.isClick = true
   }
 }

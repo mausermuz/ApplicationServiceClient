@@ -1,9 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
-import { Observable, of } from 'rxjs'
+import { Observable } from 'rxjs'
 import { User } from '../models/user'
-
-const AUTH_API = 'http://localhost:8080/api/user/'
+import { environment } from '../../../../environments/environment'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,32 +14,11 @@ const httpOptions = {
 export class UserService {
   private readonly http = inject(HttpClient)
 
-  private testData: User[] = [
-    {
-      id: 1,
-      username: 'User1',
-      status: true
-    }, {
-      id: 2,
-      username: 'User2',
-      status: true
-    }, {
-      id: 3,
-      username: 'User3',
-      status: false
-    }
-  ]
-
-  // public getUsers(): Observable<User[]> {
-  //   return this.http.get<User>(AUTH_API + 'getUsers')
-  // }
-
   public getUsers(): Observable<User[]> {
-    return of(this.testData)
-    //return this.http.get<User>(AUTH_API + 'getUsers')
+    return this.http.get<User[]>(environment.apiUrl + 'user/getusers')
   }
-  
+
   public updateStatusUsers(users: User[]): Observable<any> {
-    return this.http.post<any>(AUTH_API + 'getUsers', users, httpOptions)
+    return this.http.post<any>(environment.apiUrl + 'getUsers', users, httpOptions)
   }
 }

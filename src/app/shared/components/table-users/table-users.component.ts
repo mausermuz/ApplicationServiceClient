@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit, output } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
 import {
-  MatDialog,
+  MatDialog, MatDialogConfig,
 } from '@angular/material/dialog'
 import { DialogComponent } from '../dialog/dialog.component'
 import { User } from '../../../features/users/models/user'
@@ -15,28 +15,26 @@ import { User } from '../../../features/users/models/user'
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableUsersComponent implements OnInit {
-  @Input() user!: User[]
-  public onListChange = output<any[]>()
+export class TableUsersComponent {
+  @Input() users!: User[]
+  public onListChange = output<any>()
 
   private readonly dialog = inject(MatDialog)
-  private users: User[] = []
-
-  ngOnInit(): void {
-    this.users = this.user
-  }
 
   public onClick(userInfo: User): void {
-    const dialogRef = this.dialog.open(DialogComponent, { 
-      width: '400px',
-      height: '300px',
-      data: { user: userInfo } 
-    })
-  
-    dialogRef.afterClosed().subscribe(result => { 
+    const dialogConfig = new MatDialogConfig()
+    dialogConfig.disableClose = true
+    dialogConfig.autoFocus = false
+    dialogConfig.width = '80%'
+    dialogConfig.height = '50%'
+
+    dialogConfig.data = { user: userInfo }
+
+    const dialogRef = this.dialog.open(DialogComponent, dialogConfig)
+
+    dialogRef.afterClosed().subscribe(result => {
        if (result) {
-        //this.user.next(this.users)
-        this.onListChange.emit(this.users)
+          this.onListChange.emit(result)
        }
     })
   }
